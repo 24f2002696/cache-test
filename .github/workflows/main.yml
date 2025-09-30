@@ -1,0 +1,27 @@
+name: Cache Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cache-job:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Prime the cache
+      - name: Prime cache
+        id: prime-cache-a76129f
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/test-cache
+          key: cache-a76129f
+
+      # Step 3: Echo cache hit or miss
+      - name: Show cache result
+        run: |
+          echo "Cache hit? ${{ steps.prime-cache-a76129f.outputs.cache-hit }}"
